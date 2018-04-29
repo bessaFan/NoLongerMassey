@@ -1,4 +1,4 @@
-from twisted.internet import reactor
+# from twisted.internet import reactor
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from bs4 import BeautifulSoup
@@ -23,11 +23,6 @@ class InfoScraper(scrapy.Spider):
 
 
 paragraphs = []
-
-
-def return_query(query):
-    return return_query(query, 15)
-
 
 def return_query(query, num_queries):
     query = query.replace(" ", "+")
