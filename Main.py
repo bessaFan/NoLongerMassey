@@ -46,7 +46,7 @@ def return_query(query, num_queries):
 
 
 def run(query):
-    urls.append(return_query(query, 10))
+    urls.append(return_query(query, 35))
     print(urls[0])
     runner = CrawlerRunner()
     d = runner.crawl(InfoScraper())

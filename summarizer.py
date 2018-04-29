@@ -103,11 +103,12 @@ class matrix:
 
 
 def summarize(paragraph):
-    # sentences = paragraph.split(".")
     sentences = re.split('\.|\?|!', paragraph)
 
+    sentences = list(set(sentences))
+
     for i in sentences:
-        if i == "":
+        if i == "" or i == "." or i == "?" or i == "!":
             sentences.remove(i)
 
     for i in range(len(sentences)):
@@ -132,35 +133,21 @@ def summarize(paragraph):
     for _ in range(I):
         error = graph.update()
 
-    print(error)
-
     scores = []
 
     for i in range(D):
         scores.append(graph.scores[i])
 
+    scores = list(set(scores))
+
     scores.sort()
     scores = scores[::-1]
 
     summary = []
-    # for j in range(D):
-    #     for i in range(N):
-    #         if graph.scores[j] == scores[i]:
-    #             summary.append(sentences[j].sentence)
-    #             break
-    #
-    # return summary
-    X = N;
-    for i in range(X):
-        for j in range(D):
-            if scores[i] == graph.scores[j]:
-                if sentences[j].sentence in summary:
-                    X += 1
-                    break
-
-
-                summary.append(sentences[j].sentence)
-                print(scores[i])
+    for j in range(N):
+        for i in range(D):
+            if graph.scores[i] == scores[j]:
+                summary.append(sentences[i].sentence)
                 break
 
     return summary
