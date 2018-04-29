@@ -1,3 +1,3 @@
 # Introduction
 
-Built for MasseyHack IV
+A hack built for MasseyHack IV
