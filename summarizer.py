@@ -6,7 +6,7 @@ N = 5
 d = 0.85
 I = 50
 common = ["the", "in", "on", "was", "a", "an", "are", "of", "to", "at", "and", "for", "there", "from", "it",
-          "these", "that", "by", "is", "has", "into", "this", "you", "your", "i", "i'm", "i'll", "you'll"]
+          "these", "that", "by", "is", "has", "into", "this", "you", "your", "i", "i'm", "i'll", "you'll", "do", "but"]
 
 
 class sentence:
@@ -30,6 +30,11 @@ class sentence:
         self.removeString(",")
         self.removeString("\"")
         self.removeString("-")
+        self.removeString(";")
+        self.removeString("[")
+        self.removeString("]")
+        self.removeString("(")
+        self.removeString(")")
 
     def removeString(self, string):
         for i in range(len(self.words)):
@@ -145,9 +150,15 @@ def summarize(paragraph):
     #             break
     #
     # return summary
-    for i in range(N):
+    X = N;
+    for i in range(X):
         for j in range(D):
             if scores[i] == graph.scores[j]:
+                if sentences[j].sentence in summary:
+                    X += 1
+                    break
+
+
                 summary.append(sentences[j].sentence)
                 print(scores[i])
                 break
