@@ -7,7 +7,7 @@ Website application made for MasseyHacks IV
 ### Installation
 
 ```
-sudo pip install flask
+(sudo) pip install flask
 pip install scrapy
 pip install BeautifulSoup4
 ```
