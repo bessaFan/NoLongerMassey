@@ -1,4 +1,4 @@
-# from twisted.internet import reactor
+from twisted.internet import reactor
 import scrapy
 from scrapy.crawler import CrawlerRunner
 from bs4 import BeautifulSoup
@@ -16,11 +16,6 @@ class InfoScraper(scrapy.Spider):
             yield {
                 'article': text,
             }
-            # next_page = response.css('cite::text').extract_first()
-            # print(next_page)
-            # if next_page is not None:
-            #     yield response.follow(next_page, callback=self.parse)
-
 
 paragraphs = []
 
@@ -39,4 +34,4 @@ def run(query):
     print(paragraphs)
 
 
-run('benzene')
+# run('benzene')

@@ -1,8 +1,9 @@
-# #server
+# #serve
 # from flask import Flask
 # # import Main
 # app = Flask(__name__)
 import json
+import Main
 import time
 import glob
 import os
@@ -21,13 +22,11 @@ app = Flask(__name__)
 def main():
 	return render_template('index.html', hi="hi")
 
-# @app.route("/result")
-# def result():
-# 	query=request.args.get('query')
-# 	run (query)
-
-
-
+@app.route("/result")
+def result():
+	query=request.args.get('query')
+	run (query)
+	return "done"
 
 if __name__ == "__main__":
     app.run()
