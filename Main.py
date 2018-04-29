@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 urls = []
 
+
 class InfoScraper(scrapy.Spider):
     name = "spiderman"
     start_urls = urls
@@ -16,6 +17,11 @@ class InfoScraper(scrapy.Spider):
             yield {
                 'article': text,
             }
+            if "..." not in text:
+                paragraphs.append(text)
+                yield {
+                    'article': text,
+                }
 
 paragraphs = []
 
@@ -35,3 +41,4 @@ def run(query):
 
 
 # run('benzene')
+    return ' '.join(map(str, paragraphs))
