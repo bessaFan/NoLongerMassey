@@ -1,6 +1,6 @@
-from twisted.internet import reactor
 import scrapy
 from scrapy.crawler import CrawlerRunner
+from twisted.internet import reactor
 from bs4 import BeautifulSoup
 
 urls = []
