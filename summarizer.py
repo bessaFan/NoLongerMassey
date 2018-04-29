@@ -1,8 +1,12 @@
 import math
+import re
 from Main import run
 
 N = 5
 d = 0.85
+I = 50
+common = ["the", "in", "on", "was", "a", "an", "are", "of", "to", "at", "and", "for", "there", "from", "it",
+          "these", "that", "by", "is", "has", "into", "this", "you", "your", "i", "i'm", "i'll", "you'll"]
 
 
 class sentence:
@@ -48,12 +52,10 @@ def similarity(a, b):
             if a.words[i] == b.words[j]:
                 intersections += 1
 
-    return intersections / (math.log(len(a.words)) + math.log(len(b.words)))
+    return intersections / (math.log(len(a.words)) + math.log(len(b.words)) + 1)
 
 
 def isCommon(s):
-    common = ["the", "in", "on", "was", "a", "an", "are", "of", "to", "at", "and", "for", "there", "from", "it",
-              "these", "that", "by", "is", "has"]
     return s in common;
 
 
@@ -80,7 +82,13 @@ class matrix:
                     sum += self.weightMatrix[j][i] / weightSum * self.scores[j]
             new[i] = (1 - d) + d * sum
 
+        error = 0
+        for i in range(self.N):
+            error += abs(self.scores[i] - new[i])
+
         self.scores = new
+
+        return error
 
     def isParent(self, i, j):
         if i == j:
@@ -90,12 +98,12 @@ class matrix:
 
 
 def summarize(paragraph):
-    sentences = paragraph.split(".")
+    # sentences = paragraph.split(".")
+    sentences = re.split('\.|\?|!', paragraph)
 
-    for i in range(len(sentences)):
-        if sentences[i] == "":
-            sentences.pop(i)
-            i -= 1
+    for i in sentences:
+        if i == "":
+            sentences.remove(i)
 
     for i in range(len(sentences)):
         sentences[i] += "."
@@ -116,8 +124,10 @@ def summarize(paragraph):
 
     graph.weightMatrix = weights
 
-    for _ in range(100):
-        graph.update()
+    for _ in range(I):
+        error = graph.update()
+
+    print(error)
 
     scores = []
 
@@ -128,17 +138,25 @@ def summarize(paragraph):
     scores = scores[::-1]
 
     summary = []
-    for j in range(D):
-        for i in range(N):
-            if graph.scores[j] == scores[i]:
+    # for j in range(D):
+    #     for i in range(N):
+    #         if graph.scores[j] == scores[i]:
+    #             summary.append(sentences[j].sentence)
+    #             break
+    #
+    # return summary
+    for i in range(N):
+        for j in range(D):
+            if scores[i] == graph.scores[j]:
                 summary.append(sentences[j].sentence)
+                print(scores[i])
                 break
 
     return summary
 
 
 def main():
-    raw_text = run('dog')
+    raw_text = run('banana')
     print(raw_text + '\n\n')
     s = summarize(raw_text)
     for i in range(len(s)):
