@@ -5,7 +5,6 @@
 import json
 import Main
 import time
-import glob
 import os
 from shutil import copyfile
 from flask import Flask, request, redirect, url_for, render_template
