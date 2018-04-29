@@ -5,7 +5,7 @@ from nltk.tokenize import word_tokenize as tokenize
 import nltk
 import itertools
 import numpy as np
-import cPickle as pickle
+import pickle
 
 WHITELIST = '0123456789abcdefghijklmnopqrstuvwxyz '
 VOCAB_SIZE = 1200
