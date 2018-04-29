@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 urls = []
 BLACKLIST = ['youtube', 'amazon', 'ebay', 'kijiji', 'bestbuy', 'petsmart', 'walmart', 'vimeo']
 
+
 class InfoScraper(scrapy.Spider):
     name = "spiderman"
     start_urls = urls
@@ -24,12 +25,19 @@ class InfoScraper(scrapy.Spider):
                 # if next_page is not None:
                 #     yield response.follow(next_page, callback=self.parse)
 
+            text = BeautifulSoup(block.css('.st').extract_first(), 'lxml').get_text().replace("\n", "")
+            paragraphs.append(text)
+            yield {
+                'article': text,
+            }
+            if "..." not in text:
+                paragraphs.append(text)
+                yield {
+                    'article': text,
+                }
+
 
 paragraphs = []
-
-
-def return_query(query):
-    return return_query(query, 15)
 
 
 def return_query(query, num_queries):
@@ -44,4 +52,7 @@ def run(query):
     d = runner.crawl(InfoScraper())
     d.addBoth(lambda _: reactor.stop())
     reactor.run()  # the script will block here until the crawling is finished
+    print(paragraphs)
+
+    # run('benzene')
     return ' '.join(map(str, paragraphs))
